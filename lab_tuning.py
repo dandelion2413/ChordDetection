@@ -8,7 +8,7 @@ import numpy
 # 	else:
 # 		return -1
 
-f_ans = open('lab_tuning_ans.txt', 'w+')
+f_ans = open('../output/lab_tuning_ans.txt', 'w+')
 
 tune = [[0 for i in xrange(24)] for i in xrange(12)]
 tune[0] = [ 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1 ,0 ,1 ,0 ,0 ,0 , 0, 1, 0, 0]
@@ -24,16 +24,17 @@ for i in xrange(1,12):
 # 	print tune[i]
 
 # Array = [[0 for i in xrange(6)] for i in xrange(300)] 
-for line_lab in open('../lists/A_Hard_Day_s_Night_lab.txt', 'r'):
+for lineLab in open('../beatles/lists/A_Hard_Day_s_Night.txt', 'r'):
 	# for line in open('./A_Hard_Day_s_Night/01-A_Hard_Day_s_Night.lab', 'r'):
-	# line_lab = line_lab.split()
+	# lineLab = lineLab.split()
 	count = int(0)
 	data_Chord = [0 for i in xrange(300)] 
 	# Chord = [[0 for i in xrange(12)] for i in xrange(2)]
 	Chord = [0 for i in xrange(24)]
 	Chord_kind = [0 for i in xrange(24)]
-	print line_lab[0:len(line_lab)-2]
-	for line in open(line_lab[0:len(line_lab)-2], 'r'):
+	labFileName = '../beatles/chordlabs/' + lineLab[0:len(lineLab)-1] + '.lab'
+	print labFileName
+	for line in open(labFileName, 'r'):
 	    tmpA, tmpB, data_Chord[count] = line.split()
 	    # print data_Chord[count]
 	    # sprint data_Chord[count][0]
