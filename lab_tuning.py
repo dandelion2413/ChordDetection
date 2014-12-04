@@ -14,25 +14,25 @@ fReorderData = open('../output/Reorder.txt', 'w+')
 tune = [[0 for i in xrange(25)] for i in xrange(24)]
 
 
-tune[0] = [ 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1 ,0 ,1 ,0 ,0 ,0 , 0, 1, 0, 0]
-tune[12] = [ 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0 , 0, 0]
+# tune[0] = [ 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1 ,0 ,1 ,0 ,0 ,0 , 0, 1, 0, 0]
+# tune[12] = [ 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0 , 0, 0]
 
-for i in xrange(1,12):
-	for j in xrange(0,25):
-		if(j==0):
-			tune[i][j] = 1
-		elif(j<13):
-			tune[i][j] = tune[i-1][(j+12-2)%12+1]
-		else:
-			tune[i][j] = tune[i-1][(j+12-2)%12+13]
-for i in xrange(13,24):
-	for j in xrange(0,25):
-		if(j==0):
-			tune[i][j] = 1
-		elif(j<13):
-			tune[i][j] = tune[i-1][(j+12-2)%12+1]
-		else:
-			tune[i][j] = tune[i-1][(j+12-2)%12+13]
+# for i in xrange(1,12):
+# 	for j in xrange(0,25):
+# 		if(j==0):
+# 			tune[i][j] = 1
+# 		elif(j<13):
+# 			tune[i][j] = tune[i-1][(j+12-2)%12+1]
+# 		else:
+# 			tune[i][j] = tune[i-1][(j+12-2)%12+13]
+# for i in xrange(13,24):
+# 	for j in xrange(0,25):
+# 		if(j==0):
+# 			tune[i][j] = 1
+# 		elif(j<13):
+# 			tune[i][j] = tune[i-1][(j+12-2)%12+1]
+# 		else:
+# 			tune[i][j] = tune[i-1][(j+12-2)%12+13]
 
 # print "   ",
 # print [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5]
@@ -58,8 +58,13 @@ for line in open('../beatles/KEYS', 'r'):
 	   	minorTune = 1
 	else:
 		continue
-	index = (distance * 2 + 10 + accidental)%12 + minorTune * 12 if(distance > 4) else (distance * 2 + 12 + accidental)%12 + minorTune * 12
-	index = (distance * 2 + 11 + accidental)%12 + minorTune * 12 if(distance > 1) else index
+	if(distance > 4):
+		index = (distance * 2 + 10 + accidental)%12 + minorTune * 12  
+	elif(distance > 1):
+		index = (distance * 2 + 11 + accidental)%12 + minorTune * 12
+	else:
+		index = (distance * 2 + 12 + accidental)%12 + minorTune * 12
+	
     
 	# dataTune[index][dataTuneCount[index]][0] = tmpA
 	# dataTune[index][dataTuneCount[index]][1] = tmpB
@@ -67,7 +72,7 @@ for line in open('../beatles/KEYS', 'r'):
 	# dataTuneCount[index] = dataTuneCount[index] + 1
 	# tmpY[dataTuneTotal][0] = tmpA
 	tmpY[dataTuneTotal][0] = index
-	tmpY[dataTuneTotal][1] = tmpB
+	tmpY[dataTuneTotal][1] = tmpA
 	dataTuneTotal = dataTuneTotal + 1
 # print dataTune
 # print dataTuneCount
@@ -130,5 +135,6 @@ for album in open('../beatles/lists/lists.txt', 'r'):
 			else:
 				print >>fReorderData, Chord[x],
 		print >>fReorderData, tmpY[tmpYCount][0]
+		print >>fAns, '%2d' %(tmpY[tmpYCount][0])
 		tmpYCount = tmpYCount + 1
 print tmpYCount, dataTuneTotal
