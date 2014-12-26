@@ -1,18 +1,13 @@
-%% choose the input audio file
-%filename = 'Hey Jude.wav';
-filename = 'Let_It_Be.wav';
-%filename = 'Systematic_Cadence-C-Major_Meinard_portato.wav';
-%filename = 'Systematic_Cadence-C-Major_Meinard_staccato.wav';
-%filename = 'Systematic_Chord-C-Major_Eight-Instruments.wav';
-%filename = 'Systematic_Scale-C-Major_Meinard_fast.wav';
-%filename = 'Systematic_Scale-C-Major_Meinard_middle.wav';
-
-%% choose the method (beattrack)
-%onset;
-beattrack;
+%% beatTrack
+waveFile = 'C:\Users\Eric\Desktop\Google ¶³ºÝµwºÐ\Jang\MATLAB-Chroma-Toolbox_2.0\Let_It_Be.wav';
+wObj=waveFile2obj(waveFile);
+btOpt=btOptSet;
+btOpt.type='constant';
+showPlot=0;
+cBeat=beatTrack(wObj, btOpt, 0);
 
 %% audio_to_pitch
-[f_audio,sideinfo] = wav_to_audio('', 'data_WAV/', filename);
+[f_audio,sideinfo] = wav_to_audio('', '/', 'Let_It_Be.wav');
 shiftFB = estimateTuning(f_audio);
 paramPitch.winLenSTMSP = 4410;
 paramPitch.shiftFB = shiftFB;
@@ -25,8 +20,7 @@ paramCLP.applyLogCompr = 1;
 paramCLP.factorLogCompr = 100;
 paramCLP.visualize = 0;
 paramCLP.inputFeatureRate = sideinfo.pitch.featureRate;
-%[f_CLP,sideinfo] = pitch_to_chroma(f_pitch,paramCLP,sideinfo,Onsets);
-[f_CLP,sideinfo] = pitch_to_chroma(f_pitch,paramCLP,sideinfo,cBeat);
+[f_CLP,sideinfo,chromaFile] = pitch_to_chroma(f_pitch,paramCLP,sideinfo,cBeat);
 
 %{
 paramCP.applyLogCompr = 0;
